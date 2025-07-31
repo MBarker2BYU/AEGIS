@@ -1,0 +1,17 @@
+{
+  "name": "aegis",
+  "version": "1.0.0",
+  "description": "Encrypted messaging system with MVC, Render, PostgreSQL, and Pusher",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "pg": "^8.11.3",
+    "bcrypt": "^5.1.1",
+    "pusher": "^5.2.0",
+    "ejs": "^3.1.9"
+  }
+}
