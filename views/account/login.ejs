@@ -1,0 +1,19 @@
+<div class="form-outer-wrapper">
+    <div class="form-inner-wrapper">
+        <fieldset>
+            <form id="loginForm" action="/account/login" method="POST">
+                <label for="account_email">Email:</label>
+                <input type="email" id="account_email" name="account_email" placeholder="Email" required>
+                <label for="account_password">Password:</label>
+                <div class="password-wrapper">
+                    <input type="password" id="account_password" name="account_password" placeholder="Password" required>
+                    <img id="passwordToggle" class="eye-icon" src="/images/show-password.png" alt="Show Password">
+                </div>
+                <button type="submit">LOGIN</button>
+            </form>
+        </fieldset>
+        <div class="spacer"></div>
+        <a href="/account/registration">No account? Sign-up</a>
+    </div>
+</div>
+<script src="/scripts/script.js"></script>

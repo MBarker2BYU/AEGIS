@@ -1,0 +1,313 @@
+:root {
+  --osu-black: #000000;
+  --osu-scarlet: #BB0000;
+  --osu-darken-scarlet: #950000;
+  --osu-gray: #666666;
+  --osu-white: #FFFFFF;
+  --osu-light-gray: #B0B0B0;
+  --osu-dark-gray: #333333;
+  --heading-font: "Stardos Stencil", Arial, serif;
+  --text-font: "Special Elite", Arial, serif;
+  --frosted-glass: rgba(255, 255, 255, 0.25);
+  --smoked-glass: rgba(0, 0, 0, 0.25);
+  --shadow-color: rgba(0, 0, 0, 0.65);
+  --header-footer-border-radius: 8px;
+  --border-radius: 10px;
+  --button-border-radius: 5px;
+  --glow-color: rgba(187, 0, 0, 0.5); /* OSU Scarlet glow for chat container */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Full viewport height */
+  overflow: hidden; /* Prevent page-level overflow */
+}
+
+body {
+  font-family: var(--text-font), sans-serif;
+  text-align: center;
+  display: flex; /* Use Flexbox for layout */
+  flex-direction: column; /* Stack header, main, footer vertically */
+  min-height: 100vh; /* Ensure body fills at least viewport height */
+}
+
+header, footer {
+  background: var(--osu-white);
+  color: var(--osu-black);
+  padding: 1rem;
+  flex-shrink: 0; /* Prevent header/footer from shrinking */
+  border-radius: var(--header-footer-border-radius);
+}
+
+footer {
+  position: sticky; 
+  bottom: 0; 
+  z-index: 1; 
+}
+
+h1, h2, h3 {
+  font-family: var(--heading-font), sans-serif;
+  margin: 0;
+}
+
+main {
+  flex: 1; /* Fill remaining space between header and footer */
+  padding: 2rem;
+  overflow-y: auto; /* Allow main to scroll if content overflows */
+  display: flex; /* Ensure main is a flex container for chat-container */
+  flex-direction: column; /* Stack children vertically */
+}
+
+button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.header-container {
+  display: grid;
+  grid-template-columns: 150px auto;
+  gap: 20px;
+  align-items: center;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.header-container h1 {
+  font-size: 7rem;
+  margin: 0;
+  padding: 0;
+  line-height: 0.9;
+  display: inline-block;
+}
+
+.header-container p {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.header-tagline,
+.header-message {
+  font-size: 1.25rem !important;
+  color: var(--osu-black);  
+}
+
+.header-message {
+    margin-top: 25px !important;
+}
+
+/* Chat interface */
+.chat-container {
+  flex: 1 1 auto; /* Fill available space within main */
+  overflow-y: auto; /* Scroll if content overflows */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: var(--border-radius);
+  border: var(--osu-light-gray) 1px solid;
+  margin: 10px 0;
+  box-shadow: 0 0 10px var(--glow-color); /* Glow effect with OSU Scarlet */
+  background-color: var(--frosted-glass); /* Slight transparency for style */
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: var(--border-radius);
+  margin: 5px 0;
+  word-wrap: break-word;
+}
+
+.outbound {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 5px;
+}
+
+.inbound {
+  background-color: #e9ecef;
+  color: black;
+  align-self: flex-start;
+  border-bottom-left-radius: 5px;
+}
+
+.input-container {
+  display: flex;
+  padding: 10px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 3px 3px 5px var(--shadow-color);
+  border: var(--osu-light-gray) 1px solid;
+}
+
+#message-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--osu-light-gray);
+  border-radius: var(--border-radius);
+  margin: 0 10px;
+  outline: none;
+}
+
+#attach-button,
+#send-button {
+  padding: 10px 20px;
+  background-color: var(--osu-scarlet);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+#attach-button {
+  padding: 10px 15px;
+}
+
+#attach-button:hover,
+#send-button:hover {
+  background-color: var(--osu-darken-scarlet);
+}
+
+.spacer {
+  height: 20px;
+}
+
+.form-outer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--osu-white);    
+}
+
+.form-inner-wrapper {
+  background-color: var(--osu-white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 4px var(--shadow-color);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: var(--osu-black);
+  border: var(--osu-light-gray) 1px solid;
+}
+
+.form-inner-wrapper fieldset {
+  border: none;
+}
+
+
+.form-inner-wrapper label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.form-inner-wrapper input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: var(--osu-light-gray) 1px solid;
+  border-radius: 5px;
+  box-sizing: border-box;  
+}
+
+.form-inner-wrapper button{
+  width: 100%;
+  padding: 10px;
+  background-color: var(--osu-scarlet);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.form-inner-wrapper button:hover {
+  background-color: var(--osu-darken-scarlet);
+}
+
+.form-inner-wrapper select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;  
+}
+
+.eye-icon {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px) {
+  .header-container {
+    grid-template-columns: 80px auto;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .logo {
+    width: 100%;
+    max-width: 75px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .header-tagline,
+  .header-message {
+    font-size: 0.65rem !important;
+    color: var(--osu-black);    
+  }
+
+.header-message {
+    margin-top: 15px !important;
+}
+
+  .header-text {
+    text-align: left;
+  }
+
+  .header-container h1 {
+    font-size: 5rem;
+    margin: 0;
+    padding: 0;
+    line-height: 0.9;
+    display: inline-block;
+  }
+
+  .header-container p {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+}
