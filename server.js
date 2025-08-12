@@ -1,10 +1,38 @@
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
+const pool = require('./database/')
 const session = require('express-session');
-// const pgSession = require('connect-pg-simple')(session);
+const cookieParser = require("cookie-parser")
 
+const utilities = require('./utilities');
+
+//routers
 const accountRouter = require('./routes/aegis-account-route');
+
+
+app.use(express.urlencoded({ extended: true })); // Parse form data
+app.use(express.json()); // Parse JSON data (optional, if needed)
+app.use(cookieParser());
+
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+app.use(utilities.checkJWTToken)
 
 //Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -19,8 +47,9 @@ app.set('layout', './layouts/layout');
 app.use(express.static('public'));
 app.use('/account', accountRouter);
 
-
-
+app.get('/', (req, res) => {
+  res.redirect('/account/login');
+});
 
 /* ***********************
  * Local Server Information

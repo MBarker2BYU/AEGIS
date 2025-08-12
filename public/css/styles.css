@@ -165,6 +165,14 @@ button {
   outline: none;
 }
 
+.account-controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.account-button,
+.logout-button,
 #attach-button,
 #send-button {
   padding: 10px 20px;
@@ -179,6 +187,8 @@ button {
   padding: 10px 15px;
 }
 
+.account-button:hover,
+.logout-button:hover,
 #attach-button:hover,
 #send-button:hover {
   background-color: var(--osu-darken-scarlet);
@@ -225,6 +235,11 @@ button {
   border: var(--osu-light-gray) 1px solid;
   border-radius: 5px;
   box-sizing: border-box;  
+}
+
+.grayed-email {
+    color: var(--osu-gray) !important;
+  cursor: not-allowed;
 }
 
 .form-inner-wrapper button{
