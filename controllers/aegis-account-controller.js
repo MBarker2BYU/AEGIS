@@ -114,13 +114,13 @@ controller.registerPost = async (req, res) => {
     last_name: req.body.last_name,
     account_email: req.body.account_email,
     account_password: req.body.account_password,
-    rsa_public_key: req.body.rsa_public_key,
+    ecdh_public_key: req.body.ecdh_public_key,
     ecdsa_public_key: req.body.ecdsa_public_key,
   };
 
   try {
     // Check if keys are null or undefined
-    if (!accountData.rsa_public_key || !accountData.ecdsa_public_key) {
+    if (!accountData.ecdh_public_key || !accountData.ecdsa_public_key) {
       return res.status(400).json({
         success: false,
         message: 'Invalid or missing cryptographic keys',

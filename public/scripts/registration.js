@@ -82,8 +82,15 @@ async function registerUser(event)
       params.append(key, value);
     }
 
-    params.append('rsa_public_key', "No RSA Key");
-    params.append('ecdsa_public_key', "No ECDSA Key");
+    const account_email = formData.get('account_email');
+
+    // Add cryptographic keys if not present
+    const { ecdsa, ecdh } = await generateKeyPair();
+
+    params.append('ecdh_public_key', ecdh.publicKey);
+    params.append('ecdsa_public_key', ecdsa.publicKey);
+
+    storePrivateKeys(account_email, ecdh.privateKey, ecdsa.privateKey);
 
     const response = await fetch('/account/registration', {
       method: 'POST',
