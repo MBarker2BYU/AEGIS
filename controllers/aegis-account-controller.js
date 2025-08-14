@@ -51,42 +51,121 @@ controller.register = (req, res) => {
 }
 
 controller.registerPost = async (req, res) => {
-
   const accountData = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     account_email: req.body.account_email,
-    account_password: req.body.account_password
+    account_password: req.body.account_password,
+    rsa_public_key: req.body.rsa_public_key,
+    ecdsa_public_key: req.body.ecdsa_public_key,
   };
 
-  try
-  {
+  try {
+    // Check if keys are null or undefined
+    if (!accountData.rsa_public_key || !accountData.ecdsa_public_key) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or missing cryptographic keys',
+      });
+    }
 
-    if(accountData.account_email) {
+    // Check if email is already in use
+    if (accountData.account_email) {
       const existingAccount = await accountModel.getAccountByEmail(accountData.account_email);
       if (existingAccount) {
-        req.flash("error", "Email already in use.");
-        return res.redirect("/account/register");
+        return res.status(409).json({
+          success: false,
+          message: 'Email already in use.',
+        });
       }
     }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(accountData.account_password, 10);
     accountData.account_password = hashedPassword;
 
+    // Create the account
     const results = await accountModel.createAccount(accountData);
 
     if (results) {
       req.session.account_id = results.account_id;
-      res.redirect('/account/login');
+      return res.status(201).json({
+        success: true,
+        message: 'Account created successfully.',
+        redirect: '/account/login', // Let client handle redirect
+      });
     } else {
-      res.send('Error creating account');
+      return res.status(500).json({
+        success: false,
+        message: 'Error creating account.',
+      });
     }
+  } catch (error) {
+    console.error('Error during registration:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during registration.',
+      error: error.message, // Optional: remove in production
+    });
   }
-  catch (error)
-  {
-    console.error('Error hashing password:', error);
-    res.send('Error creating account');
-  } 
+};controller.registerPost = async (req, res) => {
+  const accountData = {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    account_email: req.body.account_email,
+    account_password: req.body.account_password,
+    rsa_public_key: req.body.rsa_public_key,
+    ecdsa_public_key: req.body.ecdsa_public_key,
+  };
+
+  try {
+    // Check if keys are null or undefined
+    if (!accountData.rsa_public_key || !accountData.ecdsa_public_key) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or missing cryptographic keys',
+      });
+    }
+
+    // Check if email is already in use
+    if (accountData.account_email) {
+      const existingAccount = await accountModel.getAccountByEmail(accountData.account_email);
+      if (existingAccount) {
+        return res.status(409).json({
+          success: false,
+          message: 'Email already in use.',
+        });
+      }
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(accountData.account_password, 10);
+    accountData.account_password = hashedPassword;
+
+    // Create the account
+    const results = await accountModel.createAccount(accountData);
+
+    if (results) {
+      req.session.account_id = results.account_id;
+      return res.status(201).json({
+        success: true,
+        message: 'Account created successfully.',
+        redirect: '/account/login', // Let client handle redirect
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: 'Error creating account.',
+      });
+    }
+  } catch (error) {
+    console.error('Error during registration:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during registration.',
+      error: error.message, // Optional: remove in production
+    });
+  }
 };  
 
 controller.profile = async (req, res) => {

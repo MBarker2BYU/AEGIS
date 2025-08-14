@@ -5,8 +5,10 @@ const model = {}
 model.createAccount = async (accountData) => {
   const { first_name, last_name, account_email, account_password } = accountData
     const result = await pool.query(
-    'INSERT INTO account (first_name, last_name, account_email, account_password) VALUES ($1, $2, $3, $4) RETURNING *',
-    [first_name, last_name, account_email, account_password]
+    'INSERT INTO account (first_name, last_name, account_email, account_password, rsa_public_key, ecdsa_public_key) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+    [first_name, last_name, account_email, account_password,
+    accountData.rsa_public_key,
+    accountData.ecdsa_public_key]
   )
   return result.rows[0]
 }
