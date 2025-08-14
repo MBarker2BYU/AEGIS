@@ -1,61 +1,3 @@
-// // public/js/registration.js
-// document.addEventListener('DOMContentLoaded', () => {
-//   const form = document.getElementById('registrationForm');
-//   if (!form) {
-//     console.error('Registration form not found. Check the ID in HTML.');
-//     return;
-//   }
-
-//   form.addEventListener('submit', async function(event) {
-//     const firstName = document.getElementById('first_name').value;
-//     const lastName = document.getElementById('last_name').value;
-//     const email = document.getElementById('account_email').value;
-//     const password = document.getElementById('account_password').value;
-//     const messageDiv = document.getElementById('message');
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-//     console.log('Form submitted with email:', email);
-
-//     if (!firstName.trim() || !lastName.trim() || !email.trim() || !emailRegex.test(email) || password.length < 8) {
-//       messageDiv.textContent = 'Please fill all fields correctly (password min 8 chars)!';
-//       event.preventDefault();
-//       return;
-//     }
-
-//     try {
-//       // Generate and store private keys
-//       const result = await generateAndStorePrivateKey(email);
-//       console.log(result.message);
-
-//       // Export public keys and add to form
-//       const rsaPublicKeyBase64 = btoa(String.fromCharCode(...new Uint8Array(await window.crypto.subtle.exportKey('spki', await getPublicKey('rsa', email)))));
-//       const ecdsaPublicKeyBase64 = btoa(String.fromCharCode(...new Uint8Array(await window.crypto.subtle.exportKey('spki', await getPublicKey('ecdsa', email)))));
-
-//       const rsaInput = document.createElement('input');
-//       rsaInput.type = 'hidden';
-//       rsaInput.name = 'rsaPublicKey';
-//       rsaInput.value = rsaPublicKeyBase64;
-//       form.appendChild(rsaInput);
-
-//       const ecdsaInput = document.createElement('input');
-//       ecdsaInput.type = 'hidden';
-//       ecdsaInput.name = 'ecdsaPublicKey';
-//       ecdsaInput.value = ecdsaPublicKeyBase64;
-//       form.appendChild(ecdsaInput);
-
-//       // Validate keys
-//       const validation = await isKeyPairValid(email);
-//       console.log(validation.message);
-//       messageDiv.textContent = 'Submitting...';
-//     } catch (error) {
-//       console.error('Registration error:', error.message);
-//       messageDiv.textContent = 'Failed to generate or validate keys!';
-//       event.preventDefault();
-//       await deletePrivateKey(email).catch(console.error);
-//     }
-//   });
-// });
-
 async function registerUser(event)
 {
   event.preventDefault(); // Prevent default form submission
@@ -85,12 +27,12 @@ async function registerUser(event)
     const account_email = formData.get('account_email');
 
     // Add cryptographic keys if not present
-    const { ecdsa, ecdh } = await generateKeyPair();
+    const { rsa } = await generateKeyPair();
 
-    params.append('ecdh_public_key', ecdh.publicKey);
-    params.append('ecdsa_public_key', ecdsa.publicKey);
+    params.append('rsa_public_key', rsa.publicKey);
+    // params.append('ecdsa_public_key', ecdsa.publicKey);
 
-    storePrivateKeys(account_email, ecdh.privateKey, ecdsa.privateKey);
+    storePrivateKeys(account_email, rsa.privateKey);
 
     const response = await fetch('/account/registration', {
       method: 'POST',

@@ -1,14 +1,22 @@
 <div class="account-controls">
   <button class="account-button" onclick="location.href='/account/profile'">ACCOUNT</button>
+  <div>
+    <label for="callsign">Callsign:</label>
+    <input type="text" id="callsign" name="callsign" placeholder="Callsign">  
+    <input type="hidden" id="rsa_public_key" name="rsa_public_key">
+    <input type="hidden" id="rsa_private_key" name="rsa_private_key">
+    <input type="hidden" id="source_id" name="source_id" value="<%= account_email %>">    
+  </div>  
   <button class="logout-button" onclick="location.href='/account/logout'">LOGOUT</button>  
 </div>
 <div class="chat-container" id="chat-container">
   <!-- Messages will be added here dynamically -->
 </div>
 <div class="input-container">
-    <button id="attach-button">+</button>
+    <!-- <button id="attach-button">+</button> -->
     <input type="text" id="message-input" placeholder="Type a message...">
     <button id="send-button">Send</button>
 </div>
 <!-- <script src="/scripts/messagingSim.js"></script> -->
-<script src="/scripts/comms.js"></script>
+<script src="/scripts/system-cryptography.js"></script>
+<script src="/scripts/messaging.js"></script>

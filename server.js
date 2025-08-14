@@ -9,6 +9,7 @@ const utilities = require('./utilities');
 
 //routers
 const accountRouter = require('./routes/aegis-account-route');
+const messageRoutes = require('./routes/aegis-messaging-route');
 
 
 app.use(express.urlencoded({ extended: true })); // Parse form data
@@ -46,6 +47,7 @@ app.set('layout', './layouts/layout');
 //Routes
 app.use(express.static('public'));
 app.use('/account', accountRouter);
+app.use('/messaging', messageRoutes);
 
 app.get('/', (req, res) => {
   res.redirect('/account/login');

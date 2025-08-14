@@ -14,7 +14,8 @@
   --header-footer-border-radius: 8px;
   --border-radius: 10px;
   --button-border-radius: 5px;
-  --glow-color: rgba(187, 0, 0, 0.5); /* OSU Scarlet glow for chat container */
+  --glow-color-red: rgba(187, 0, 0, 0.5); /* OSU Scarlet glow for chat container */
+  --glow-color-green: rgba(4, 53, 4, 0.75); /* Green glow for success messages */
 }
 
 html, body {
@@ -110,6 +111,13 @@ button {
     margin-top: 25px !important;
 }
 
+#container
+{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* Chat interface */
 .chat-container {
   flex: 1 1 auto; /* Fill available space within main */
@@ -121,8 +129,15 @@ button {
   border-radius: var(--border-radius);
   border: var(--osu-light-gray) 1px solid;
   margin: 10px 0;
-  box-shadow: 0 0 10px var(--glow-color); /* Glow effect with OSU Scarlet */
+  box-shadow: 0 0 10px var(--glow-color-red); /* Glow effect with OSU Scarlet */
   background-color: var(--frosted-glass); /* Slight transparency for style */
+}
+
+#callsign {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px var(--glow-color-red); /* Glow effect with OSU Scarlet */
 }
 
 .message {
